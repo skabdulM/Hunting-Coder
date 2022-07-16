@@ -2,20 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/Blog.module.css";
 import Link from "next/link";
 
-const Blog = () => {
-  const [blogs, setBlogs] = useState([]);
-
-  useEffect(() => {
-    console.log("use affect is running");
-    fetch("http://localhost:3000/api/blogs")
-      .then((a) => {
-        return a.json();
-      })
-      .then((parsed) => {
-        console.log(parsed);
-        setBlogs(parsed);
-      });
-  }, []);
+const Blog = (props) => {
+  const [blogs, setBlogs] = useState(props.allBlogs);
 
   return (
     <>
@@ -38,5 +26,10 @@ const Blog = () => {
     </>
   );
 };
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/blogs");
+  const allBlogs = await res.json();
+  return { props: { allBlogs } };
+}
 
 export default Blog;
