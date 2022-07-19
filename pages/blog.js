@@ -27,8 +27,8 @@ const Blog = (props) => {
   );
 };
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/blogs");
-  const allBlogs = await res.json();
+  let res = await fetch("http://localhost:3000/api/blogs");
+  let allBlogs = await res.json();
   return { props: { allBlogs } };
 }
 
